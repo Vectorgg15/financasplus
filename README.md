@@ -1,0 +1,1 @@
+Sistema para ajudar os usuários a controlar suas finanças. O sistema deve permitir o registro de receitas e despesas, categorizando-as e exibindo um gráfico com o saldo mensal. O usuário pode também definir metas de economia.
