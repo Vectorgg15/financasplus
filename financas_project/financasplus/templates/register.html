@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Controle Financeiro - Cadastro</title>
+    <link href="{% static 'css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <section class="container-fluid">
+            <section class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="card shadow mb-4">
+                        <header class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary text-center">Crie sua conta</h6>
+                        </header>
+                        <div class="card-body">
+                            {% if messages %}
+                        <div class="alert alert-danger" role="alert">
+                            {% for message in messages %}
+                                {{ message }}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                            <form method="POST" action="{% url 'register' %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="username">Usuário</label>
+                                    <input type="text" class="form-control" id="username" name="username" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Senha</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirm_password">Confirmar Senha</label>
+                                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary mt-3 btn-block">Cadastrar</button>
+                            </form>
+                            <hr>
+                            <div class="text-center mt-3">
+                                <p class="small">Já tem uma conta?</p>
+                                <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-sign-in-alt"></i> Faça login
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </div>
+    <footer class="text-center py-4 bg-gradient-primary text-light">
+        <p>&copy; 2024 Controle Financeiro</p>
+    </footer>
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Controle Financeiro</title>
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <aside class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <header class="sidebar-brand d-flex align-items-center justify-content-center">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Finanças+</div>
+                <a href="{% url 'logout' %}" class="btn btn-primary btn-sm ml-auto"><i class="fas fa-sign-out-alt"></i> Sair</a>
+            </header>
+            
+        </aside>
+
+        <main id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <h1 class="h3 mb-0 text-gray-800">Painel Financeiro</h1>
+                </nav>
+
+                <section class="container-fluid">
+                    <header class="row">
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Saldo Atual</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="saldo">R$ 0,00</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Total de Receitas</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalReceitas">R$ 0,00</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-arrow-up fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-danger shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                                Total de Despesas</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalDespesas">R$ 0,00</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-arrow-down fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    <section class="card shadow mb-4">
+                        <header class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Adicionar Transação</h6>
+                        </header>
+                        <div class="card-body">
+                            <form id="transacaoForm">
+                                <div class="form-group">
+                                    <label for="descricao">Descrição</label>
+                                    <input type="text" class="form-control" id="descricao" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="valor">Valor</label>
+                                    <input type="text" class="form-control" id="valor" required value="0,00">
+                                </div>                                                         
+                                <div class="form-group">
+                                    <label for="categoria">Categoria</label>
+                                    <select id="categoria" class="form-control">
+                                        <option value="receita">Receita</option>
+                                        <option value="despesa">Despesa</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary mt-3"><i class="fas fa-plus"></i> Adicionar</button>
+                            </form>
+                        </div>
+                    </section>
+
+                    <section class="card shadow mb-4">
+                        <header class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Transações</h6>
+                        </header>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Descrição</th>
+                                            <th>Valor</th>
+                                            <th>Categoria</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="transacoes">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="row mb-4">
+                        <div class="col-lg-6">
+                            <div class="card shadow mb-4">
+                                <header class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Gráfico 1</h6>
+                                </header>
+                                <div class="card-body">
+                                    <canvas id="receitasChart" width="287" height="208"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card shadow mb-4">
+                                <header class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Gráfico 2</h6>
+                                </header>
+                                <div class="card-body">
+                                    <canvas id="despesasChart" width="287" height="208"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+            </div>
+        </main>
+    </div>
+    <footer class="text-center py-4 bg-gradient-primary text-light">
+        <p>&copy; 2024 Controle Financeiro</p>
+    </footer>
+
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
